@@ -1,0 +1,101 @@
+using System;
+using CommandLine;
+
+namespace Factory
+{
+    class Program
+    {
+        public class Options
+        {
+            [Option('c', "choice", Required = true, HelpText = "Give Slogan")]
+            public string Slogan { get; set; }
+        }
+        static void Main(string[] args)
+        {
+            Parser.Default.ParseArguments<Options>(args)
+              .WithParsed(RunOptions);
+
+            static void RunOptions(Options opts)
+            {
+                FactoryPresident.CreatePresident(opts.Slogan);
+            }
+            
+            Console.ReadKey();
+        }
+    }
+
+    class FactoryPresident
+    {
+        public static IPresident CreatePresident(string slogan)
+        {
+            switch (slogan)
+            {
+                case "Vénal":
+                    Console.WriteLine("new president LREM");
+                    return new LREM();
+                    break;
+                case "Indécis":
+                    Console.WriteLine("new president Center");
+                    return new Center();
+                    break;
+                case "Fou":
+                    Console.WriteLine("new president Communist");
+                    return new Communist();
+                    break;
+                case "Végétarien":
+                    Console.WriteLine("new president Green");
+                    return new Green();
+                    break;
+                case "Profiteur":
+                    Console.WriteLine("new president Socialist");
+                    return new Socialist();
+                    break;
+                case "Psychopathe":
+                    Console.WriteLine("new president RightParti");
+                    return new RightParti();
+                    break;
+                case "Xénophobe":
+                    Console.WriteLine("new president Naz");
+                    return new Naz();
+                    break;
+                default:
+                    Console.WriteLine("insert a choice");
+                    slogan = Console.ReadLine();
+                    return CreatePresident(slogan);
+            }
+        }             
+    }
+
+    interface IPresident
+    {
+        public string Slogan { get; }
+    }
+    class LREM : IPresident
+    {
+        public string Slogan => "Vénal";
+    }
+    class Center : IPresident
+    {
+        public string Slogan => "Indécis";
+    }
+    class Communist : IPresident
+    {
+        public string Slogan => "Fou";
+    }
+    class Green : IPresident
+    {
+        public string Slogan => "Végétarien";
+    }
+    class Socialist: IPresident
+    {
+        public string Slogan => "Profiteur";
+    }
+    class RightParti : IPresident
+    {
+        public string Slogan => "Psychopathe";
+    }
+    class Naz : IPresident
+    {
+        public string Slogan => "Xénophobe";
+    }
+}
