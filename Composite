@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+
+namespace Composite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Person A = new Person("Jean");
+            Person B = new Person("Dud");
+            Person C = new Person("IO");
+            Person D = new Person("Who");
+            Person E = new Person("Boss");
+            Person F = new Person("Jeen");
+            Person G = new Person("Li");
+            A.family.Add(B);
+            A.family.Add(C);
+            A.family.Add(D);
+            B.family.Add(E);
+            C.family.Add(F);
+            D.family.Add(G);
+
+            Console.WriteLine(A);
+            Console.WriteLine(B);
+            Console.WriteLine(C);
+            Console.WriteLine(D);
+
+
+        }
+    }
+    class Person
+    {
+        public List<Person> family { get; } = new List<Person>();
+
+        public string Name { get; set; }
+
+        public Person(string name)
+        {
+            Name = name;
+        }
+
+        public override string ToString()
+        {
+            string description = Name;
+
+            foreach(Person member in family)
+            {
+                description += "\t " + member;
+            }
+            return description;
+        }
+    }
+}
